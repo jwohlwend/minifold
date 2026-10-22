@@ -1,7 +1,6 @@
 import torch
 import torch.nn.functional as F
-import triton
-import triton.language as tl
+from minifold.model.kernels._triton import triton, tl
 import gc
 
 

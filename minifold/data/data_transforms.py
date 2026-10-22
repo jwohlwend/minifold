@@ -1228,7 +1228,7 @@ def random_crop_to_size(
                 crop_start = num_res_crop_start if is_num_res else 0
                 crop_size = num_res_crop_size if is_num_res else dim
             slices.append(slice(crop_start, crop_start + crop_size))
-        protein[k] = v[slices]
+        protein[k] = v[tuple(slices)]
 
     protein["seq_length"] = protein["seq_length"].new_tensor(num_res_crop_size)
 

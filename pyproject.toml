@@ -5,16 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "minifold"
 version = "0.1.0"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 description = "MiniFold"
 readme = "README.md"
 dependencies = [
     "numpy",
     "scipy",
     "pytorch_lightning",
-    "torch>=2.3.0",
+    "torch>=2.14.0",
     "fair-esm",
-    "biopython==1.81",
+    "biopython>=1.81",
     "edit_distance",
     "pandas",
     "modelcif",

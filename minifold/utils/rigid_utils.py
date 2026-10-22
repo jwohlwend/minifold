@@ -752,7 +752,7 @@ class Rotation:
             device = torch.device("cpu")
         return self.to(device)
 
-    def to(self, device: Optional[torch.device] = None, dtype: Optional[torch.dtype] = None) -> Rigid:
+    def to(self, device: Optional[torch.device] = None, dtype: Optional[torch.dtype] = None) -> Rotation:
         """
         Moves the transformation object to the specified device and dtype.
 
@@ -762,13 +762,19 @@ class Rotation:
         Returns:
             A version of the transformation on the specified device/dtype
         """
-        rots = self._rots
-        trans = self._trans
-        if rots is not None:
-            rots = rots.to(device=device, dtype=dtype)
-        if trans is not None:
-            trans = trans.to(device=device, dtype=dtype)
-        return Rigid(rots, trans)
+        if self._rot_mats is not None:
+            return Rotation(
+                rot_mats=self._rot_mats.to(device=device, dtype=dtype),
+                quats=None,
+            )
+        elif self._quats is not None:
+            return Rotation(
+                rot_mats=None,
+                quats=self._quats.to(device=device, dtype=dtype),
+                normalize_quats=False,
+            )
+        else:
+            raise ValueError("Both rotations are None")
 
     def detach(self) -> Rotation:
         """
