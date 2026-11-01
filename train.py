@@ -1,5 +1,5 @@
 import argparse
-import os
+import subprocess
 import sys
 import yaml
 
@@ -52,7 +52,8 @@ def main(args):
         )
         loggers.append(wdb_logger)
         freeze_path = f"{wdb_logger.experiment.dir}/package_versions.txt"
-        os.system(f"{sys.executable} -m pip freeze > {freeze_path}")
+        with open(freeze_path, "w") as freeze_file:
+            subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=freeze_file)
         wdb_logger.experiment.save(f"{freeze_path}")
         wdb_logger.experiment.save(args.config)
 
